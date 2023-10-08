@@ -1,0 +1,34 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: example.com
+    Specs:
+      - Hostname: orderer
+PeerOrgs:
+  - Name: Universitiy
+    Domain: Universitiy.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Compani
+    Domain: Compani.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Student
+    Domain: Student.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Verifier
+    Domain: Verifier.example.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1

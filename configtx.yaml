@@ -1,0 +1,132 @@
+---
+Organizations:
+  - &OrdererOrg
+    Name: OrdererOrg
+    ID: OrdererMSP
+    MSPDir: crypto-config/ordererOrganizations/example.com/msp
+
+  - &Universitiy
+    Name: UniversitiyMSP
+    ID: UniversitiyMSP
+    MSPDir: crypto-config/peerOrganizations/Universitiy.example.com/msp
+    AnchorPeers:
+      - Host: peer0.Universitiy.example.com
+        Port: 7051
+
+  - &Compani
+    Name: CompaniMSP
+    ID: CompaniMSP
+    MSPDir: crypto-config/peerOrganizations/Compani.example.com/msp
+    AnchorPeers:
+      - Host: peer0.Compani.example.com
+        Port: 7051
+
+  - &Student
+    Name: StudentMSP
+    ID: StudentMSP
+    MSPDir: crypto-config/peerOrganizations/Student.example.com/msp
+    AnchorPeers:
+      - Host: peer0.Student.example.com
+        Port: 7051
+
+  - &Verifier
+    Name: VerifierMSP
+    ID: VerifierMSP
+    MSPDir: crypto-config/peerOrganizations/Verifier.example.com/msp
+    AnchorPeers:
+      - Host: peer0.Verifier.example.com
+        Port: 7051
+
+Orderer: &OrdererDefaults
+  OrdererType: solo
+  Addresses:
+    - orderer.example.com:7050
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 10
+    AbsoluteMaxBytes: 99 MB
+    PreferredMaxBytes: 512 KB
+
+  Kafka:
+    Brokers:
+      - 127.0.0.1:9092
+  Organizations:
+
+Application: &ApplicationDefaults
+  Organizations:
+
+Capabilities:
+  Global: &ChannelCapabilities
+    V1_1: true
+
+  Orderer: &OrdererCapabilities
+    V1_1: true
+
+  Application: &ApplicationCapabilities
+    V1_1: true
+
+Profiles:
+  OrdererGenesis:
+    Capabilities:
+      <<: *ChannelCapabilities
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+        - *OrdererOrg
+      Capabilities:
+        <<: *OrdererCapabilities
+    Consortiums:
+      SampleConsortium:
+        Organizations:
+          - *Universitiy
+          - *Compani
+          - *Student
+          - *Verifier
+
+  ChannelAll:
+    Consortium: SampleConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Universitiy
+        - *Compani
+        - *Student
+        - *Verifier
+
+      Capabilities:
+        <<: *ApplicationCapabilities
+
+  Channel123:
+    Consortium: SampleConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Universitiy
+        - *Compani
+        - *Student
+
+      Capabilities:
+        <<: *ApplicationCapabilities
+
+  Channel234:
+    Consortium: SampleConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Compani
+        - *Student
+        - *Verifier
+
+      Capabilities:
+        <<: *ApplicationCapabilities
+
+  Channel12:
+    Consortium: SampleConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Universitiy
+        - *Compani
+
+      Capabilities:
+        <<: *ApplicationCapabilities
