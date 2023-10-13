@@ -1,4 +1,4 @@
-# Multichannel-in-Hyperledger-Fabric
+# Multichannel-in-Hyperledger-Fabric v1.3.0
 Multichannel in Hyperledger Fabric with four Organisation and 4 peer 
 
 # Steps to run the fabric sample test network with 4 ORG
